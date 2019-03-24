@@ -23,12 +23,12 @@ function Average($dataList)
     foreach($dataList as $key => $val)
     {
         $sum += (float)$val;
-        $numPhones++;
+        $numPhones += 1;
     }
     //ternary operator to return 
     //average if $numPhones is more than 
     // 0 to prevent didvision by 0
-    return $numphones > 0? $sum / $numPhones : 0;
+    return $numPhones > 0? $sum / $numPhones : 0;
 }
 
 $smartphones = array("Sony"=> "400","HUAWEI"=>"340","Samsung"=>"139","Apple Iphone"=>"234");
@@ -45,12 +45,14 @@ function printTable($css_class_selector,$callback_func,$callback_params)
     echo "<table class=\"".$css_class_selector."\">";
     //contents of the table decided by callback function
     
+if($callback_func != NULL){
 call_user_func_array($callback_func,$callback_params);
+}
    echo "</table>";
 }
 
 
-function printKeyValTable($dataList, $th)
+function printKeyValTable($dataList, $th, $callback, $callbackParams)
 {
     echo "<tr>
               <th>".$th[0]."</th>
@@ -63,9 +65,21 @@ function printKeyValTable($dataList, $th)
        echo     "<td>".$key."</td>";
        echo     "<td>".$val."</td>";
        echo "</tr>";
-   }          
+   } 
+   
+   //do something here
+   if($callback != NULL)
+   {
+   call_user_func_array($callback,$callbackParams);
+   }
 }
 
+function printAverage($dataList)
+{
+    echo "<tr><td>Average</td>";
+    echo "<td>".Average($dataList);
+    echo "</td></tr>";   
+}
 //Wereally do not like repeating same tasks
 function VerbAssocArray($dataList, $verbCallback, $verbCallBackParams)
 {
@@ -132,9 +146,12 @@ function DropdownMenu($callback,$callbackParams)
     <div>
         <h1>Dealing with Dynamic Table Associative Arrays</h1>
         <?php
-           $tableHeaders = array("Smartphones","Prices"); printTable("smartphonesTable","printKeyValTable", array($smartphones,$tableHeaders));     
+           $tableHeaders = array("Smartphones","Prices");  
+                     printTable("smartphonesTable","printKeyValTable", array($smartphones,$tableHeaders, "printAverage", array($smartphones)));     
            
            DropdownMenu("Test",array($smartphones));      
+        echo "<p>Average phone price";
+        echo " is:".Average($smartphones)."</p>";
         
         ?>
     </div>
