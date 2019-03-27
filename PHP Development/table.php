@@ -40,13 +40,14 @@ $phonePriceRange = MinMax($smartphones);
 $minPhonePrice =  $phonePriceRange[0];
 $maxPhonePrice = $phonePriceRange[1];
 
+//prints an Empty table
 function printTable($css_class_selector,$callback_func,$callback_params)
 {
     echo "<table class=\"".$css_class_selector."\">";
     //contents of the table decided by callback function
     
 if($callback_func != NULL){
-call_user_func_array($callback_func,$callback_params);
+call_user_func_array($callback_func,$callback_params); //puts contents into the table
 }
    echo "</table>";
 }
@@ -80,25 +81,7 @@ function printAverage($dataList)
     echo "<td>".Average($dataList);
     echo "</td></tr>";   
 }
-//Wereally do not like repeating same tasks
-function VerbAssocArray($dataList, $verbCallback, $verbCallBackParams)
-{
-    foreach($dataList as $key =>$val)          {
-       //call_user_func_array($verbCallBack,
-       
-    }
-}
 
-function Test($dataList)
-{
-    foreach($dataList as $key => $val)
-    {
-         echo "<option value='"
-            .$key."'>".$key." ".$val.
-            "</option>";
-                      
-    }
-}
 function DropdownMenu($callback,$callbackParams)
 {
      echo "<select>";
